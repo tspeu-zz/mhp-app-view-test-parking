@@ -1,0 +1,7 @@
+{
+  "name": "app-parking-view",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

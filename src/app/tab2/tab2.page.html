@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      Enter to the parking
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-spinner
+    name="lines"
+    *ngIf="showloadingMap"
+    color="alert"
+    style=" width:50%;"
+  ></ion-spinner>
+
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button
+      color="{{ actionParkingColor }}"
+      (click)="onParkingAction()"
+    >
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <div #mapElement class="map"></div>
+</ion-content>
