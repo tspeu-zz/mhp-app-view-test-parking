@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { UserOptions } from '../Models/user-options';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,13 @@ export class LoginPage implements OnInit {
   };
   submitted = false;
 
-  constructor(public router: Router, private http: HttpClient) {}
+  _user: any;
+
+  constructor(
+    public router: Router,
+    private http: HttpClient,
+    public _userService: UserService
+  ) {}
 
   ngOnInit() {}
 
@@ -34,6 +41,13 @@ export class LoginPage implements OnInit {
       // this.http.get('https://someapi.com/posts').subscribe((response) => {
       //     console.log(response);
       // });
+      //  TODO:
+      console.log('forms es -> ' + form);
+      this._userService.postData(
+        this._userService._URL_USER_EMAIL,
+        'pepe@mail.com'
+      );
+      //  FIXME:
       this.router.navigateByUrl('/app/tabs/tab1');
     }
   }

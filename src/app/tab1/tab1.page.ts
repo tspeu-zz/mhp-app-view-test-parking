@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab1',
@@ -6,7 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
-  constructor() {}
+  constructor(private _router: Router) {}
 
   save() {
     console.log('save');
@@ -14,4 +15,8 @@ export class Tab1Page {
   /* this.http.get('https://someapi.com/posts').subscribe((response) => {
     console.log(response);
 });*/
+  onLogout() {
+    this._router.navigateByUrl('/login');
+    console.log('logout');
+  }
 }

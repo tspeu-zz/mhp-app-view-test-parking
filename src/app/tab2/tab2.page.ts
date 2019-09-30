@@ -9,6 +9,8 @@ import {
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { environment } from 'src/environments/environment';
 import { ToastController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
+import { UserParking } from '../Models/parkins-list-models';
 
 declare var google;
 
@@ -25,11 +27,14 @@ export class Tab2Page implements OnInit, AfterViewInit {
   actionParkingColor = 'light';
   showloadingMap = false;
 
+  _userParking: UserParking;
+
   @ViewChild('mapElement') mapNativeElement: ElementRef;
 
   constructor(
     private geolocation: Geolocation,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private http: HttpClient
   ) {}
 
   ngOnInit() {
@@ -71,21 +76,44 @@ export class Tab2Page implements OnInit, AfterViewInit {
     this.enterParking = !this.enterParking;
     console.log('entra al parking ' + !this.enterParking);
     this.actionParkingColor = this.enterParking ? 'danger' : 'success';
-
+    this._userParking = {
+      idUser: 1,
+      text: 'test from app',
+      idParking: 1,
+      location: {
+        coordinates: { lat: this.latitude, lon: this.longitude }
+      },
+      isEnterParking: this.enterParking
+    };
     // TODO:
     console.log('TODO GRABAR en DB ');
-
+    this.http.post('https://localhost:3000/api/parking/', this._userParking);
+    console.log('datos enviados ->' + this._userParking);
     this.presentToast(this.enterParking);
   }
 
   async presentToast(enter: boolean) {
-    let mess = enter ? 'now enter to the parking' : 'now leaving the parking';
+    let message = ``;
+    let mensaje = enter
+      ? `-> Enter to the parking lot. On location lat|long: ${this.latitude} | ${this.longitude} ->`
+      : `<- Leaving the parking lot. On location lat|long: ${this.latitude} | ${this.longitude} <-`;
     const toast = await this.toastController.create({
-      message: `${mess}, Have a nice day!  =)`,
+      message: `${mensaje}, Have a nice day!  =)`,
       duration: 2000
     });
     toast.present();
   }
+
+  /*{ 
+	"idUser": 1,
+    "text": "test2",
+    "idParking": 1,
+    "location": {
+  "type": "Point",
+    "coordinates": {"lat":36.098948, "lon":-10}
+  },
+    "isEnterParking": false */
+
   /* 
   private getGoogleMaps(): Promise<any> {
     const win = window as any;

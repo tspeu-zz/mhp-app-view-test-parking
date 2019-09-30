@@ -1,10 +1,18 @@
-export interface UserOptions {
-  idUser: number;
-  text: string;
+export interface parkingLot {
   idParking: number;
   location: {
-    type: { type: string };
-    coordinates: [];
+    type: 'Point';
+    coordinates: { lat: number; lon: number };
   };
-  isEnterParking: boolean;
 }
+/*
+{ 
+	"idUser": 1,
+    "text": "test2",
+    "idParking": 1,
+    "location": {
+  "type": "Point",
+    "coordinates": {"lat":36.098948, "lon":-10}
+  },
+    "isEnterParking": false
+    */

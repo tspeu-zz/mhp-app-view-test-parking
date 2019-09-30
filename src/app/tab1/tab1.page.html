@@ -1,8 +1,13 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>
-      Tab One
+      User Info
     </ion-title>
+    <ion-buttons slot="primary" (click)="onLogout()">
+      <ion-button color="light" fill="outline">
+        <ion-icon slot="end" name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

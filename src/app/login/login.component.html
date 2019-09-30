@@ -14,7 +14,7 @@
   <form #loginForm="ngForm" novalidate>
     <ion-list>
       <ion-item>
-        <ion-label position="stacked" color="primary">Username</ion-label>
+        <ion-label position="stacked" color="primary">Email</ion-label>
         <ion-input
           [(ngModel)]="login.username"
           name="username"
@@ -32,7 +32,7 @@
           [hidden]="username.valid || submitted == false"
           class="ion-padding-start"
         >
-          Username is required
+          Email is required
         </p>
       </ion-text>
 
@@ -60,7 +60,11 @@
 
     <ion-row>
       <ion-col>
-        <ion-button (click)="onLogin(loginForm)" type="submit" expand="block"
+        <ion-button
+          (click)="onLogin(loginForm)"
+          type="submit"
+          expand="block"
+          size="large"
           >Login</ion-button
         >
       </ion-col>

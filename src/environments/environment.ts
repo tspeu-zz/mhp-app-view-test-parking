@@ -5,8 +5,10 @@
 export const environment = {
   production: false,
   googleMapsAPIKey: 'AIzaSyCqoxTUdPOwLkUNUTDVyJqssA-m_c0QTac',
+  apiParking: 'https://localhost:3000/api/parking/',
   apiUser: 'https://localhost:5001/api/User',
-  apiParking: ''
+  _URL_ALL_USERS : 'https://localhost:5001/api/User',
+  _URL_USER_EMAIL : 'https://localhost:5001/api/User/email'
 };
 
 /*
