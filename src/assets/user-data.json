@@ -1,0 +1,13 @@
+{
+  "userWithCar": [
+    {
+      "Id": 1,
+      "Name": "Pepe",
+      "Surname": "Bueno",
+      "Email": "pepe@pmail.com",
+      "Telephone": "938546542",
+      "Model": "Renault 5",
+      "LicencePlate": "BXZ0004"
+    }
+  ]
+}

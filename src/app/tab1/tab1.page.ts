@@ -11,4 +11,7 @@ export class Tab1Page {
   save() {
     console.log('save');
   }
+  /* this.http.get('https://someapi.com/posts').subscribe((response) => {
+    console.log(response);
+});*/
 }
