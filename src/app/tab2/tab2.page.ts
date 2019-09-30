@@ -87,7 +87,7 @@ export class Tab2Page implements OnInit, AfterViewInit {
     };
     // TODO:
     console.log('TODO GRABAR en DB ');
-    this.http.post('https://localhost:3000/api/parking/', this._userParking);
+    this.http.post('http://localhost:3000/api/parking/', this._userParking);
     console.log('datos enviados ->' + this._userParking);
     this.presentToast(this.enterParking);
   }

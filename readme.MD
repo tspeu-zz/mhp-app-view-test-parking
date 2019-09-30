@@ -23,3 +23,6 @@ npm install @ionic-native/location-accuracy
 ionic cordova plugin add cordova-plugin-googlemaps --variable API_KEY_FOR_ANDROID="YOUR_API_KEY_HERE" --variable API_KEY_FOR_IOS="YOUR_API_KEY_HERE"
 
 npm install @types/googlemaps --save-dev
+
+ionic cordova plugin add cordova-plugin-advanced-http
+npm install @ionic-native/http
