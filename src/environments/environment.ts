@@ -13,7 +13,7 @@ export const environment = {
   apiParking: 'https://localhost:3000/api/parking/',
   apiUserURL: 'https://localhost:5001/api/User',
   _URL_ALL_USERS: 'https://localhost:5001/api/User',
-  _URL_USER_EMAIL: 'https://localhost:5001/api/User/email'
+  _URL_USER_EMAIL: 'https://localhost:5001/api/User/email/'
 };
 
 /*

@@ -35,8 +35,10 @@ export class UserService {
   }
 
   postData(url: string, data: any): Observable<any> {
-    return this._http.post<any>(url, data);
-    // .pipe(map(this.processData, this));
+    return this._http.post<any>(url, { Body: data }, this.httpOptions).pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
   }
 
   // : Promise<any>
