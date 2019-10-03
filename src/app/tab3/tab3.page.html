@@ -1,19 +1,37 @@
 <ion-header>
-  <ion-toolbar color="danger">
+  <ion-toolbar color="primary">
     <ion-title>
-      Leaving the parking
+      History Parking List
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-fab vertical="top" horizontal="end" slot="fixed">
+  <!-- <ion-fab vertical="top" horizontal="end" slot="fixed">
     <ion-fab-button color="success" (click)="togleeParking()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
-  </ion-fab>
+  </ion-fab> -->
   <!-- <div #mapElement class="map"></div> -->
 
-  <div id="mapId3" class="map-container"></div>
+  <!-- <div id="mapId3" class="map-container"></div> -->
+
+  <ion-card>
+    <ion-item *ngFor="let u of _UsersData" href="#" class="activated">
+      <ion-icon
+        name="car"
+        slot="start"
+        [color]="u.isEnterParking ? 'success' : 'danger'"
+      ></ion-icon>
+      <ion-label>{{ u.idUser }} | {{ u.text }}</ion-label>
+    </ion-item>
+  </ion-card>
 </ion-content>
-<!--  -->
+<!--
+idParking: 1
+idUser: 1
+isEnterParking: true
+location: {type: "Point", coordinates: Array(2)}
+text: "test"
+_id: "5d90920f62e13f25d435caea"  
+-->

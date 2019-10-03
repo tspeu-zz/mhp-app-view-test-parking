@@ -4,12 +4,14 @@
 // googleMapsAPIKey: 'AIzaSyCqoxTUdPOwLkUNUTDVyJqssA-m_c0QTac',
 // googleMapsAPIKey: 'AIzaSyBboAiBl-e9pQkqpJFMV2oNFZ9Z6SujUr4',
 // googleMapsAPIKey: 'AIzaSyDFN4zMYsmQrFo6cmhPUx8hkVgu41jM96Q',
-
+// googleMapsAPIKey: 'AIzaSyCtV97Wl_A3cKk41kldWtgPYzfa2dKubA0',
+// AIzaSyAondL6h-UPtvsgpecXUlMWo0dTa3hvHjM
 export const environment = {
   production: false,
-  googleMapsAPIKey: 'AIzaSyCtV97Wl_A3cKk41kldWtgPYzfa2dKubA0',
+  googleMapsAPIKey: 'AIzaSyCCTfQOHnSw1TJ1-_lQJnqzLD_0Xonf8Ro',
+  apiURL: 'http://localhost:3000/api',
   apiParking: 'https://localhost:3000/api/parking/',
-  apiUser: 'https://localhost:5001/api/User',
+  apiUserURL: 'https://localhost:5001/api/User',
   _URL_ALL_USERS: 'https://localhost:5001/api/User',
   _URL_USER_EMAIL: 'https://localhost:5001/api/User/email'
 };

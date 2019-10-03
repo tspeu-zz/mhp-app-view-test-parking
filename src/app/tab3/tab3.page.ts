@@ -7,12 +7,16 @@ import {
 } from '@angular/core';
 // import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Map, tileLayer, marker } from 'leaflet';
-// import { HttpClient } from '@angular/common/http';
-import { HTTP } from '@ionic-native/http/ngx';
+// import { HTTP } from '@ionic-native/http/ngx';
 import { UserParking } from '../Models/parkins-list-models';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
+
+// services
+import { UserService } from '../services/user.service';
+
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-tab3',
@@ -23,88 +27,56 @@ export class Tab3Page implements OnInit, AfterViewInit {
   map: Map;
   propertyList = [];
   data: any = [];
+  _UsersData: any;
+  _UserData: any;
+  actionParkingColor = 'success';
   // latitude: any;
   // longitude: any;
   // enterParking = false;
   // @ViewChild('mapElement', { static: true }) mapNativeElement: ElementRef;
 
   // Define API
-  apiURL = 'http://localhost:3000/api';
+  apiURL = environment.apiURL;
+  // 'http://localhost:3000/api'
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
     })
   };
 
-  constructor(private http: HTTP, private _http: HttpClient) {}
+  constructor(private _http: HttpClient, private userService: UserService) {}
 
   ngOnInit(): void {
     console.log('enter ngOnInit');
     // this.getData();
-    this.loadUsers();
+    this.loadAllUsers();
   }
 
-  getConfig() {
-    return this._http.get('localhost:3000/api/parking/').subscribe(data => {
-      this.data = data;
-    });
-  }
-
-  // HttpClient API get() method => Fetch employees list
-  getUsers(): Observable<any> {
-    return this._http.get<any>(this.apiURL + '/parking/1').pipe(
-      retry(1),
-      catchError(this.handleError)
-    );
-  }
-  // Get employees list
-  loadUsers() {
-    return this.getUsers().subscribe((data: {}) => {
-      this.data = data;
-      console.log('---> data--httpcliebt-> ' + data);
-      console.log('data ads--> ', JSON.stringify(this.data));
-      console.dir(this.data);
-      console.log('data dsdasad--> ', this.data);
-    });
-  }
-  // Error handling
-  handleError(error) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      // Get client-side error
-      errorMessage = error.error.message;
-    } else {
-      // Get server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-    window.alert(errorMessage);
-    return throwError(errorMessage);
-  }
-
-  async getData() {
-    const url = 'https://localhost:3000/api/parking/';
-    const params = {};
-    const headers = {};
-
-    // this.http.get(url).subscribe(res => {
-    // });
-    this.http
-      .get('http://jsonplaceholder.typicode.com/posts', {}, {})
-      .then(data => {
-        this.data = data.data;
-        this.data = data.data;
-        console.log('this.data ->' + this.data);
-        console.log('data ->' + data);
-        console.log(' status ->' + data.status);
-        // console.log('data  '+data.data); // data received by server
-        console.log('headers ->' + data.headers);
-      })
-      .catch(error => {
-        console.log('err status ' + error.status);
-        console.log('errerror ' + error.error); // error message as string
-        console.log('Errr headers ' + error.headers);
+  loadAllUsers() {
+    // return this.getUsers().subscribe((data: {}) => {
+    return this.userService
+      .loadAllData(this.apiURL + '/parking')
+      .subscribe((data: {}) => {
+        this._UsersData = data;
+        console.log('---> data---> ' + data);
+        console.log('data ads--> ', JSON.stringify(this._UsersData));
+        console.dir(this._UsersData);
+        console.log('_UsersData dsdasad--> ', this._UsersData);
       });
   }
+  // Error handling
+  // handleError(error) {
+  //   let errorMessage = '';
+  //   if (error.error instanceof ErrorEvent) {
+  //     // Get client-side error
+  //     errorMessage = error.error.message;
+  //   } else {
+  //     // Get server-side error
+  //     errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+  //   }
+  //   // FIXME: window.alert(errorMessage);
+  //   return throwError(errorMessage);
+  // }
 
   ngAfterViewInit(): void {
     console.log('enter ngAfterViewInit');
@@ -135,8 +107,8 @@ export class Tab3Page implements OnInit, AfterViewInit {
     }
   }
 
-  // togleeParking() {
-  //   console.log('entra parking ' + !this.enterParking);
-  //   return !this.enterParking;
-  // }
+  togleeColorParking(isEnter: boolean) {
+    console.log('-->isEnter -> ', isEnter);
+    return (this.actionParkingColor = isEnter ? 'danger' : 'success');
+  }
 }

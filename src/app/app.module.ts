@@ -13,6 +13,9 @@ import { environment } from '../environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { UserService } from './services/user.service';
+
+// services
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,7 +31,8 @@ import { AppComponent } from './app.component';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    HTTP
+    HTTP,
+    UserService
   ],
   bootstrap: [AppComponent]
 })
