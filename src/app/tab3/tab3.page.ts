@@ -111,4 +111,8 @@ export class Tab3Page implements OnInit, AfterViewInit {
     console.log('-->isEnter -> ', isEnter);
     return (this.actionParkingColor = isEnter ? 'danger' : 'success');
   }
+  togleeTextParking(isEnter: boolean) {
+    console.log('-->isEnter -> ', isEnter);
+    return isEnter ? 'Entrance at: ' : 'It leaves at: ';
+  }
 }

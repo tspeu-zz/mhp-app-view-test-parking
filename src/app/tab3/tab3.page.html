@@ -21,9 +21,15 @@
       <ion-icon
         name="car"
         slot="start"
-        [color]="u.isEnterParking ? 'success' : 'danger'"
+        [color]="u.isEnterParking ? 'success' : 'medium'"
       ></ion-icon>
-      <ion-label>{{ u.idUser }} | {{ u.text }}</ion-label>
+      <ion-label>
+        <!-- {{ u.idUser }} | {{ u.text }} at -->
+        {{ u.updatedAt | date: 'medium' }}
+      </ion-label>
+      <ion-note slot="start" [color]="u.isEnterParking ? 'success' : 'medium'">
+        {{ togleeTextParking(u.isEnterParking) }}
+      </ion-note>
     </ion-item>
   </ion-card>
 </ion-content>
