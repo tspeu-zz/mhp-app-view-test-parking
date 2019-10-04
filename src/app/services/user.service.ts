@@ -35,7 +35,7 @@ export class UserService {
   }
 
   postData(url: string, data: any): Observable<any> {
-    return this._http.post<any>(url, { Body: data }, this.httpOptions).pipe(
+    return this._http.post<any>(url, data, this.httpOptions).pipe(
       retry(1),
       catchError(this.handleError)
     );

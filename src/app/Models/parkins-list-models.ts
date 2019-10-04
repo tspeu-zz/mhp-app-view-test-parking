@@ -3,7 +3,8 @@ export interface UserParking {
   text: string;
   idParking: number;
   location: {
-    coordinates: { lat: number; lon: number };
+    type: string;
+    coordinates: [number, number];
   };
   isEnterParking: boolean;
 }

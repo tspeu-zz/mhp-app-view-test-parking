@@ -12,6 +12,9 @@ import { ToastController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { UserParking } from '../Models/parkins-list-models';
 
+// services
+import { UserService } from '../services/user.service';
+
 declare var google;
 
 @Component({
@@ -34,7 +37,8 @@ export class Tab2Page implements OnInit, AfterViewInit {
   constructor(
     private geolocation: Geolocation,
     private toastController: ToastController,
-    private http: HttpClient
+    private http: HttpClient,
+    private userService: UserService
   ) {}
 
   ngOnInit() {
@@ -76,20 +80,46 @@ export class Tab2Page implements OnInit, AfterViewInit {
     this.enterParking = !this.enterParking;
     console.log('entra al parking ' + !this.enterParking);
     this.actionParkingColor = this.enterParking ? 'danger' : 'success';
+
     this._userParking = {
       idUser: 1,
       text: 'test from app',
       idParking: 1,
       location: {
-        coordinates: { lat: this.latitude, lon: this.longitude }
+        type: 'Point',
+        coordinates: [this.latitude, this.longitude]
       },
       isEnterParking: this.enterParking
     };
+
+    let dataTest = {
+      idUser: 4,
+      text: 'AAPPPPP sss',
+      idParking: 4,
+      location: {
+        type: 'Point',
+        coordinates: [this.latitude, this.longitude]
+      },
+      isEnterParking: true
+    };
+
     // TODO:
     console.log('TODO GRABAR en DB ');
-    this.http.post('http://localhost:3000/api/parking/', this._userParking);
-    console.log('datos enviados ->' + this._userParking);
+    this.saveToDb(dataTest);
+
+    console.log('datos enviados _userParking->', dataTest);
+    console.log(
+      'datos enviados _userParking stringify->',
+      JSON.stringify(dataTest)
+    );
+    console.dir(JSON.stringify(dataTest));
+    console.dir(dataTest);
     this.presentToast(this.enterParking);
+  }
+
+  saveToDb(data: any) {
+    this.userService.postData('https://localhost:3000/api/parking/', data);
+    console.log('data enviada +', data);
   }
 
   async presentToast(enter: boolean) {
