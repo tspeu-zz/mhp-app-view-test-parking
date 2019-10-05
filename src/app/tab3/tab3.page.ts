@@ -15,6 +15,7 @@ import { retry, catchError } from 'rxjs/operators';
 
 // services
 import { UserService } from '../services/user.service';
+import { LocalStorageService } from '../services/local-storage.service';
 
 import { environment } from 'src/environments/environment';
 
@@ -29,6 +30,7 @@ export class Tab3Page implements OnInit, AfterViewInit {
   data: any = [];
   _UsersData: any;
   _UserData: any;
+  _localUserData: any;
   actionParkingColor = 'success';
   // latitude: any;
   // longitude: any;
@@ -44,12 +46,17 @@ export class Tab3Page implements OnInit, AfterViewInit {
     })
   };
 
-  constructor(private _http: HttpClient, private userService: UserService) {}
+  constructor(
+    private _http: HttpClient,
+    private userService: UserService,
+    private localStorageService: LocalStorageService
+  ) {}
 
   ngOnInit(): void {
     console.log('enter ngOnInit');
     // this.getData();
     this.loadAllUsers();
+    this.loadLocalUser;
   }
 
   loadAllUsers() {
@@ -64,6 +71,33 @@ export class Tab3Page implements OnInit, AfterViewInit {
         console.log('_UsersData dsdasad--> ', this._UsersData);
       });
   }
+
+  loadLocalUser(key: string) {
+    this.localStorageService
+      .get(key)
+      .then(val => {
+        console.log('<--------get --------> ' + key + ' ', val);
+        this.data[key] = [];
+        this.data[key] = val;
+        console.log('<--- desde local get datos---> ' + this.data);
+        this._localUserData = this.data;
+        if (val === null) {
+          this._localUserData = [];
+        }
+      })
+      .catch(error => {
+        console.log('get error for ' + key + '', error);
+      });
+  }
+
+  loadAllLocalUser(key: string) {
+    this.localStorageService.getAll(key).then(val => {
+      this._localUserData = val;
+      console.log('-----------> get allData-->' + val);
+      console.log('------------> get allData-->' + this._localUserData);
+    });
+  }
+
   // Error handling
   // handleError(error) {
   //   let errorMessage = '';
@@ -80,6 +114,7 @@ export class Tab3Page implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     console.log('enter ngAfterViewInit');
+    this.loadLocalUser('userdata');
     // this.map = new Map('mapId3').setView([42.35663, -71.1109], 16);
 
     // //tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {

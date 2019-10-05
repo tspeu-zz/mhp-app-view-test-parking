@@ -15,11 +15,14 @@
   ></ion-spinner>
 
   <ion-fab vertical="top" horizontal="end" slot="fixed">
-    <ion-fab-button
-      color="{{ actionParkingColor }}"
-      (click)="onParkingAction()"
-    >
-      <ion-icon name="add"></ion-icon>
+    <ion-fab-button color="{{ actionParkingColor }}" (click)="onParkingAction()"
+      ><ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="primary" (click)="gotoDetailPage()">
+      <ion-icon name="create"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 

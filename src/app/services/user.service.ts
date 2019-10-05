@@ -15,14 +15,42 @@ export class UserService {
 
   httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      method: 'GET',
+      Accept: 'application/json',
+      withCredentials: 'true',
+      'Access-Control-Allow-Origin': '*'
     })
   };
+  httpOptionsPost = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      method: 'POST',
+      Accept: 'application/json',
+      withCredentials: 'true',
+      'Access-Control-Allow-Origin': '*'
+    })
+  };
+
+  headers = new HttpHeaders()
+    .set('Content-Type', 'application/json')
+    .set('Accept', 'application/json')
+    .set('withCredentials', 'true')
+    .set('Access-Control-Allow-Origin', '*');
+
+  /*
+      Headers: {
+          'method': 'GET' 
+          ,'Accept': 'application/json'
+          ,'withCredentials': 'true'
+        ,'Access-Control-Allow-Origin':'*'
+        }
+   */
 
   constructor(public events: Events, public _http: HttpClient) {}
 
   loadAllData(url: string): Observable<any> {
-    return this._http.get<any>(url).pipe(
+    return this._http.get<any>(url, { headers: this.headers }).pipe(
       retry(1),
       catchError(this.handleError)
     );
@@ -35,7 +63,7 @@ export class UserService {
   }
 
   postData(url: string, data: any): Observable<any> {
-    return this._http.post<any>(url, data, this.httpOptions).pipe(
+    return this._http.post<any>(url, data, { headers: this.headers }).pipe(
       retry(1),
       catchError(this.handleError)
     );

@@ -17,6 +17,29 @@
   <!-- <div id="mapId3" class="map-container"></div> -->
 
   <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Local Storage</ion-card-subtitle>
+    </ion-card-header>
+    <ion-item *ngFor="let u of _localUserData" href="#" class="activated">
+      <ion-icon
+        name="car"
+        slot="start"
+        [color]="u.isEnterParking ? 'success' : 'medium'"
+      ></ion-icon>
+      <ion-label>
+        {{ u.idUser }} | {{ u.text }} |
+        {{ u.updatedAt | date: 'medium' }}
+      </ion-label>
+      <ion-note slot="start" [color]="u.isEnterParking ? 'success' : 'medium'">
+        {{ togleeTextParking(u.isEnterParking) }}
+      </ion-note>
+    </ion-item>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Data from api </ion-card-subtitle>
+    </ion-card-header>
     <ion-item *ngFor="let u of _UsersData" href="#" class="activated">
       <ion-icon
         name="car"

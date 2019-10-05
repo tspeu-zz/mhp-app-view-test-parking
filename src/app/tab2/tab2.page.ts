@@ -5,6 +5,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
+import { Router, NavigationExtras } from '@angular/router';
 
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { environment } from 'src/environments/environment';
@@ -14,6 +15,7 @@ import { UserParking } from '../Models/parkins-list-models';
 
 // services
 import { UserService } from '../services/user.service';
+import { LocalStorageService } from '../services/local-storage.service';
 
 declare var google;
 
@@ -38,7 +40,9 @@ export class Tab2Page implements OnInit, AfterViewInit {
     private geolocation: Geolocation,
     private toastController: ToastController,
     private http: HttpClient,
-    private userService: UserService
+    public router: Router,
+    private userService: UserService,
+    private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit() {
@@ -106,6 +110,7 @@ export class Tab2Page implements OnInit, AfterViewInit {
     // TODO:
     console.log('TODO GRABAR en DB ');
     this.saveToDb(dataTest);
+    this.saveToLocal(dataTest);
 
     console.log('datos enviados _userParking->', dataTest);
     console.log(
@@ -122,6 +127,11 @@ export class Tab2Page implements OnInit, AfterViewInit {
     console.log('data enviada +', data);
   }
 
+  saveToLocal(data: any) {
+    this.localStorageService.set('userdata', data);
+    console.log('------> saving  localtorage', data);
+  }
+
   async presentToast(enter: boolean) {
     let message = ``;
     let mensaje = enter
@@ -132,6 +142,12 @@ export class Tab2Page implements OnInit, AfterViewInit {
       duration: 2000
     });
     toast.present();
+  }
+
+  gotoDetailPage() {
+    console.log(' got to details-->');
+    // this.router.navigate(['/details', { data: this._userParking }]);
+    this.router.navigateByUrl('/details');
   }
 
   /*{ 
