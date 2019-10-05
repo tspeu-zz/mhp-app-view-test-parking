@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormControl
+} from '@angular/forms';
+
 //services
 import { UserService } from '../services/user.service';
 //
@@ -12,36 +19,41 @@ import { environment } from 'src/environments/environment';
 })
 export class Tab1Page implements OnInit {
   _UsersData: any;
+  userdata: FormGroup;
 
   constructor(
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
-    private _userService: UserService
-  ) {}
+    private _userService: UserService,
+    private fb: FormBuilder
+  ) { }
+
   /*
-  {
-	  "IdUserCar": 477,
-	  "car": {
-	  	"IdCar": 48,
-	    "Model": "AUDI 2",
-	    "LicencePlate": "AAAAA"
-	  },
-	  "user": {
-	    "id": 48,
-	    "Name": "Pepe",
-	    "Surname": "Loco",
-	    "Email": "pepe@mail.com",
-	    "Telephone": "555222"
-	  }
-  }
+car:
+idCar: 1
+licencePlate: ""
+model: ""
+idUserCar: 1
+user:
+email: "sdsdssd"
+id: 1
+name: ""
+surname: ""
+telephone: ""
   */
+
   ngOnInit(): void {
     // get email form Logn component
     let emailUser = this._activatedRoute.snapshot.paramMap.get('email');
     // https://localhost:5001/api/User/email
     console.log('---> login por email- ->' + emailUser);
+    this.formUser();
     this.loadData(emailUser);
     this.loadAllUsers();
+  }
+
+  onSubmit({ value, valid }: { value: any; valid: boolean }) {
+    console.log(value, valid);
   }
 
   loadData(email: string) {
@@ -53,8 +65,41 @@ export class Tab1Page implements OnInit {
     this._userService
       .postData(environment._URL_USER_EMAIL, JSON.stringify(email))
       .subscribe(res => {
-        console.log('---> data---> ' + res);
+        console.log('---> get user email---> ', res);
+        console.log('---> get user vy email ---> ', JSON.stringify(res));
+        console.dir(res);
+        this.getDatatoForm(res);
       });
+  }
+
+  getDatatoForm(data) {
+    this.userdata.get('car.IdCar').setValue(data.car.idCar);
+    this.userdata.get('car.Model').setValue(data.car.model);
+    this.userdata.get('car.LicencePlate').setValue(data.car.licencePlate);
+    this.userdata.get('user.id').setValue(data.user.id);
+    this.userdata.get('user.Name').setValue(data.user.name);
+    this.userdata.get('user.Surname').setValue(data.user.surname);
+    this.userdata.get('user.Email').setValue(data.user.email);
+    this.userdata.get('user.Telephone').setValue(data.user.telephone);
+    this.userdata.get('IdUserCar').setValue(data.idUserCar);
+
+  }
+  formUser() {
+    this.userdata = this.fb.group({
+      IdUserCar: ['', [Validators.required]],
+      car: this.fb.group({
+        IdCar: [''],
+        Model: ['', Validators.required],
+        LicencePlate: ['', Validators.required]
+      }),
+      user: this.fb.group({
+        id: [],
+        Name: ['', Validators.required],
+        Surname: ['', Validators.required],
+        Email: ['', Validators.required],
+        Telephone: ['', Validators.required]
+      })
+    });
   }
 
   loadAllUsers() {
@@ -73,9 +118,7 @@ export class Tab1Page implements OnInit {
   save() {
     console.log('save');
   }
-  /* this.http.get('https://someapi.com/posts').subscribe((response) => {
-    console.log(response);
-});*/
+
   onLogout() {
     this._router.navigateByUrl('/login');
     console.log('logout');

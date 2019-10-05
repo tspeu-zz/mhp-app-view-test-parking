@@ -13,72 +13,90 @@
 
 <ion-content>
   <ion-card class="welcome-card">
-    <!-- <img src="/assets/shapes.svg" alt="" /> -->
-    <ion-avatar>
-      <img
-        src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
-      />
-    </ion-avatar>
-    <ion-card-header>
+    <ion-card-header text-center>
+      <!-- <ion-avatar> -->
+      <!-- <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" /> -->
+      <img src="/assets/shapes.svg" alt="" />
+      <!-- </ion-avatar> -->
       <ion-card-title>User Info</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-list no-lines>
-        <ion-item>
-          <ion-label stacked>Name</ion-label>
-          <ion-input type="tel" [(ngModel)]="phoneNumber"></ion-input>
-        </ion-item>
+      <form (ngSubmit)="onSubmit(userdata)" [formGroup]="userdata">
+        <ion-list no-lines>
+          <div formGroupName="user">
+            <ion-item>
+              <ion-label stacked>Name</ion-label>
+              <!-- <ion-input type="text" [(ngModel)]="phoneNumber"></!-->
+              <ion-input type="text" placeholder="Your  name" formControlName="Name">
+              </ion-input>
+            </ion-item>
+            <!-- <ion-text
+              color="danger"
+              *ngIf="
+                userdata.get('Name').hasError('required') &&
+                userdata.get('Name').touched
+              "
+            >
+              Name is required!
+            </ion-text> -->
 
-        <ion-item>
-          <ion-label stacked>Surname</ion-label>
-          <ion-input type="tel" [(ngModel)]="cardNumber"></ion-input>
-        </ion-item>
+            <ion-item>
+              <ion-label stacked>Surname</ion-label>
+              <ion-input type="text" placeholder="Your Surname " formControlName="Surname">
+              </ion-input>
+            </ion-item>
 
-        <ion-item>
-          <ion-label stacked>Email</ion-label>
-          <ion-input type="tel" [(ngModel)]="cardExpiry"></ion-input>
-        </ion-item>
+            <ion-item>
+              <ion-label stacked>Email</ion-label>
+              <ion-input type="email" placeholder="Your email address" formControlName="Email">
+              </ion-input>
+            </ion-item>
 
-        <ion-item>
-          <ion-label stacked>Telephone</ion-label>
-          <ion-input type="text" [(ngModel)]="orderCode"></ion-input>
-        </ion-item>
+            <ion-item>
+              <ion-label stacked>Telephone</ion-label>
+              <ion-input type="text" placeholder="Your Telephone " formControlName="Telephone">
+              </ion-input>
+            </ion-item>
+          </div>
+          <div formGroupName="car">
+            <ion-item>
+              <ion-label stacked>Model</ion-label>
+              <ion-input type="text" placeholder="Your Car's Model " formControlName="Model">
+              </ion-input>
+            </ion-item>
 
-        <ion-item>
-          <ion-label stacked>Model</ion-label>
-          <ion-input type="text" [(ngModel)]="orderCode"></ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label stacked>LicencePlate</ion-label>
-          <ion-input type="text" [(ngModel)]="orderCode"></ion-input>
-        </ion-item>
-      </ion-list>
-      <!-- <button ion-button outline (click)="save()">Save</button> -->
-      <ion-button size="large" color="primary" expand="full" (click)="save()"
-        >Save</ion-button
-      >
+            <ion-item>
+              <ion-label stacked>LicencePlate</ion-label>
+              <ion-input type="text" placeholder="Your Car's Model " formControlName="LicencePlate">
+              </ion-input>
+            </ion-item>
+          </div>
+        </ion-list>
+        <!-- <button ion-button outline (click)="save()">Save</button> -->
+        <ion-button [disabled]="!userdata.valid" size="large" color="primary" expand="full" (click)="save()">Save
+        </ion-button>
+      </form>
     </ion-card-content>
   </ion-card>
-  <!-- <ion-list lines="none">
-    <ion-list-header>
-      <ion-label>Parking DAY 1</ion-label>
-    </ion-list-header>
-    <ion-item href="">
-      <ion-icon slot="start" color="medium" name="book"></ion-icon>
-      <ion-label>Parking DAY</ion-label>
-    </ion-item>
-    <ion-item href="">
-      <ion-icon slot="start" color="medium" name="build"></ion-icon>
-      <ion-label>Parking DAY</ion-label>
-    </ion-item>
-    <ion-item href="">
-      <ion-icon slot="start" color="medium" name="grid"></ion-icon>
-      <ion-label>Parking DAY</ion-label>
-    </ion-item>
-    <ion-item href="">
-      <ion-icon slot="start" color="medium" name="color-fill"></ion-icon>
-      <ion-label>Parking DAY</ion-label>
-    </ion-item>
-  </ion-list> -->
 </ion-content>
+<!-- <ion-list lines="none">
+      <ion-list-header>
+        <ion-label>Parking DAY 1</ion-label>
+      </ion-list-header>
+      <ion-item href="">
+        <ion-icon slot="start" color="medium" name="book"></ion-icon>
+        <ion-label>Parking DAY</ion-label>
+      </ion-item>
+      <ion-item href="">
+        <ion-icon slot="start" color="medium" name="build"></ion-icon>
+        <ion-label>Parking DAY</ion-label>
+      </ion-item>
+      <ion-item href="">
+        <ion-icon slot="start" color="medium" name="grid"></ion-icon>
+        <ion-label>Parking DAY</ion-label>
+      </ion-item>
+      <ion-item href="">
+        <ion-icon slot="start" color="medium" name="color-fill"></ion-icon>
+        <ion-label>Parking DAY</ion-label>
+      </ion-item>
+    </ion-list> -->
