@@ -43,7 +43,7 @@ export class Tab2Page implements OnInit, AfterViewInit {
     public router: Router,
     private userService: UserService,
     private localStorageService: LocalStorageService
-  ) {}
+  ) { }
 
   ngOnInit() {
     console.log('ngOnInit');
@@ -69,7 +69,7 @@ export class Tab2Page implements OnInit, AfterViewInit {
           lng: this.longitude
         };
         infoWindow.setPosition(pos);
-        infoWindow.setContent('Test Parking found here!');
+        infoWindow.setContent('You have parked here!');
         infoWindow.open(map);
         map.setCenter(pos);
         this.showloadingMap = false;
