@@ -6,12 +6,14 @@ import {
   ViewChild
 } from '@angular/core';
 // import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { AlertController } from '@ionic/angular';
 import { Map, tileLayer, marker } from 'leaflet';
 // import { HTTP } from '@ionic-native/http/ngx';
 import { UserParking } from '../Models/parkins-list-models';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
+
 
 // services
 import { UserService } from '../services/user.service';
@@ -49,12 +51,14 @@ export class Tab3Page implements OnInit, AfterViewInit {
   constructor(
     private _http: HttpClient,
     private userService: UserService,
-    private localStorageService: LocalStorageService
-  ) {}
+    private localStorageService: LocalStorageService,
+    private alertController: AlertController
+  ) { }
 
   ngOnInit(): void {
     console.log('enter ngOnInit');
     // this.getData();
+    this.presentAlertConfirm();
     this.loadAllUsers();
     this.loadLocalUser;
   }
@@ -153,5 +157,29 @@ export class Tab3Page implements OnInit, AfterViewInit {
 
   ionViewDidLeave() {
     this._UsersData = [];
+  }
+
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      header: 'Confirm!',
+      message: 'Message <strong>Not available in this build</strong>!!!',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel:');
+          }
+        }, {
+          text: 'Okay',
+          handler: () => {
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }

@@ -164,11 +164,11 @@ export class Tab2Page implements OnInit, AfterViewInit {
     toast.present();
   }
 
-  gotoDetailPage() {
-    console.log(' got to details-->');
-    // this.router.navigate(['/details', { data: this._userParking }]);
-    this.router.navigateByUrl('/details');
-  }
+  // gotoDetailPage() {
+  //   console.log(' got to details-->');
+  //   // this.router.navigate(['/details', { data: this._userParking }]);
+  //   this.router.navigateByUrl('/details');
+  // }
 
   ionViewDidLeave() {
     this.saveTemptoLocalNew('tempUserdata', this._localTempData);
