@@ -52,9 +52,6 @@ telephone: ""
     this.loadAllUsers();
   }
 
-  onSubmit({ value, valid }: { value: any; valid: boolean }) {
-    console.log(value, valid);
-  }
 
   loadData(email: string) {
     console.log(
@@ -72,17 +69,17 @@ telephone: ""
       });
   }
 
-  getDatatoForm(data) {
-    this.userdata.get('car.IdCar').setValue(data.car.idCar);
-    this.userdata.get('car.Model').setValue(data.car.model);
-    this.userdata.get('car.LicencePlate').setValue(data.car.licencePlate);
-    this.userdata.get('user.id').setValue(data.user.id);
-    this.userdata.get('user.Name').setValue(data.user.name);
-    this.userdata.get('user.Surname').setValue(data.user.surname);
-    this.userdata.get('user.Email').setValue(data.user.email);
-    this.userdata.get('user.Telephone').setValue(data.user.telephone);
-    this.userdata.get('IdUserCar').setValue(data.idUserCar);
-
+  loadAllUsers() {
+    // return this.getUsers().subscribe((data: {}) => {
+    return this._userService
+      .loadAllData('https://localhost:5001/api/User')
+      .subscribe((data: {}) => {
+        this._UsersData = data;
+        console.log('---> data---> ' + data);
+        console.log('data ads--> ', JSON.stringify(this._UsersData));
+        console.dir(this._UsersData);
+        console.log('_UsersData dsdasad--> ', this._UsersData);
+      });
   }
   formUser() {
     this.userdata = this.fb.group({
@@ -102,21 +99,37 @@ telephone: ""
     });
   }
 
-  loadAllUsers() {
-    // return this.getUsers().subscribe((data: {}) => {
-    return this._userService
-      .loadAllData('https://localhost:5001/api/User')
-      .subscribe((data: {}) => {
-        this._UsersData = data;
-        console.log('---> data---> ' + data);
-        console.log('data ads--> ', JSON.stringify(this._UsersData));
-        console.dir(this._UsersData);
-        console.log('_UsersData dsdasad--> ', this._UsersData);
-      });
+  getDatatoForm(data) {
+    this.userdata.get('car.IdCar').setValue(data.car.idCar);
+    this.userdata.get('car.Model').setValue(data.car.model);
+    this.userdata.get('car.LicencePlate').setValue(data.car.licencePlate);
+    this.userdata.get('user.id').setValue(data.user.id);
+    this.userdata.get('user.Name').setValue(data.user.name);
+    this.userdata.get('user.Surname').setValue(data.user.surname);
+    this.userdata.get('user.Email').setValue(data.user.email);
+    this.userdata.get('user.Telephone').setValue(data.user.telephone);
+    this.userdata.get('IdUserCar').setValue(data.idUserCar);
+    this
+
   }
 
-  save() {
-    console.log('save');
+  onSubmit() {
+    console.log(this.userdata.value, this.userdata.valid);
+
+    console.log('< -- enviado este valore --> ', this.userdata.value);
+    console.log('y es valido ', this.userdata.valid);
+    // TODO:
+    this.save(JSON.stringify(this.userdata.value));
+  }
+
+  save(data: any) {
+    console.log('salvabdio la data to db -->' + data);
+    return this._userService.postData('https://localhost:5001/api/User', data)
+      .subscribe(res => console.log('DATA SEND ', res),
+        err => {
+          console.log('****ERROR AL SEND DATA TO https://localhost:5001/api/User ', data);
+          console.log('****ERROR AL SEND DAATA ---> ', err);
+        });
   }
 
   onLogout() {

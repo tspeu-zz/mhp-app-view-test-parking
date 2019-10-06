@@ -21,7 +21,7 @@
       <ion-card-title>User Info</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <form (ngSubmit)="onSubmit(userdata)" [formGroup]="userdata">
+      <form (ngSubmit)="onSubmit()" [formGroup]="userdata">
         <ion-list no-lines>
           <div formGroupName="user">
             <ion-item>
@@ -73,7 +73,7 @@
           </div>
         </ion-list>
         <!-- <button ion-button outline (click)="save()">Save</button> -->
-        <ion-button [disabled]="!userdata.valid" size="large" color="primary" expand="full" (click)="save()">Save
+        <ion-button [disabled]="!userdata.valid" size="large" color="primary" expand="full" (click)="onSubmit()">Save
         </ion-button>
       </form>
     </ion-card-content>
