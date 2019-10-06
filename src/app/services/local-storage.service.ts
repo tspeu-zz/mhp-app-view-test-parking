@@ -5,7 +5,20 @@ import { Storage } from '@ionic/storage';
   providedIn: 'root'
 })
 export class LocalStorageService {
-  constructor(public storage: Storage) {}
+  constructor(public storage: Storage) { }
+
+  //* new*/
+
+  async setData(key, value) {
+    const res = await this.storage.set(key, value);
+    console.log(res);
+  }
+
+  async getData(key) {
+    const keyVal = await this.storage.get(key);
+    console.log('Key is', keyVal);
+    return keyVal;
+  }
 
   public set(settingName, value) {
     console.log('-->set storage value  ' + value);
@@ -18,10 +31,9 @@ export class LocalStorageService {
 
   public getAll(key) {
     console.log('------>get storage value getAll--------------> ' + key);
-    return this.storage.get(key);
-    // .then(val => {
-    //   console.log('-------> get allData', val);
-    // });
+    return this.storage.get(key).then(val => {
+      console.log('-------> get allData', val);
+    });
   }
 
   public async remove(settingName) {

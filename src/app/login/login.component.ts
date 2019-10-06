@@ -31,20 +31,14 @@ export class LoginPage implements OnInit {
     public router: Router,
     private http: HttpClient,
     public _userService: UserService
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   onLogin(form: NgForm) {
     this.submitted = true;
 
     if (form.valid) {
-      //this.userData.login(this.login.name);
-      // this.http.get('https://someapi.com/posts').subscribe((response) => {
-      //     console.log(response);
-      // });
-
-      //  TODO:
       console.log('forms es -> ', form);
       console.log('forms es username-> ', form.value.username);
       console.dir(form);
@@ -52,7 +46,6 @@ export class LoginPage implements OnInit {
         this._userService._URL_USER_EMAIL,
         form.value.username
       );
-      //  FIXME:
       let navigationExtras: NavigationExtras = {
         queryParams: {
           email: form.value.username
@@ -61,11 +54,9 @@ export class LoginPage implements OnInit {
 
       this.router.navigate(['/app/tabs/tab1', { email: form.value.username }]);
     }
-    // this.router.navigateByUrl('/app/tabs/tab1');
   }
 
   onSignup() {
-    // this.router.navigateByUrl('/signup');
     console.log('signup');
   }
 }

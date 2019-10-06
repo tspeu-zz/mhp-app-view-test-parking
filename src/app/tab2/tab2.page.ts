@@ -16,6 +16,7 @@ import { UserParking } from '../Models/parkins-list-models';
 // services
 import { UserService } from '../services/user.service';
 import { LocalStorageService } from '../services/local-storage.service';
+import { TransientService } from '../services/transient.service';
 
 declare var google;
 
@@ -33,6 +34,8 @@ export class Tab2Page implements OnInit, AfterViewInit {
   showloadingMap = false;
 
   _userParking: UserParking;
+  _localTempData: any;
+  _dataOudTemp: any;
 
   @ViewChild('mapElement') mapNativeElement: ElementRef;
 
@@ -42,16 +45,19 @@ export class Tab2Page implements OnInit, AfterViewInit {
     private http: HttpClient,
     public router: Router,
     private userService: UserService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private transientService: TransientService
   ) { }
 
   ngOnInit() {
     console.log('ngOnInit');
+    // this.getLocaldata('tempUserdata');
+    this.getAllLocalData('tempUserdata');
+    this._dataOudTemp = this.transientService.getDataOut();
   }
 
   ngAfterViewInit(): void {
     console.log('ngAfterViewInit');
-
     this.showloadingMap = true;
     /* */
     this.geolocation
@@ -69,7 +75,7 @@ export class Tab2Page implements OnInit, AfterViewInit {
           lng: this.longitude
         };
         infoWindow.setPosition(pos);
-        infoWindow.setContent('You have parked here!');
+        infoWindow.setContent('Hi you have parked Here!');
         infoWindow.open(map);
         map.setCenter(pos);
         this.showloadingMap = false;
@@ -79,7 +85,7 @@ export class Tab2Page implements OnInit, AfterViewInit {
         console.log('Error getting location', error);
       });
   }
-
+  //You have parked your ${this._localTempData.car.model} here!
   onParkingAction() {
     this.enterParking = !this.enterParking;
     console.log('entra al parking ' + !this.enterParking);
@@ -132,14 +138,28 @@ export class Tab2Page implements OnInit, AfterViewInit {
     console.log('------> saving  localtorage', data);
   }
 
+  getLocaldata(key: any) {
+    this._localTempData = this.localStorageService.get(key);
+    console.log('data from component ->', this._localTempData);
+  }
+
+  getAllLocalData(key: string) {
+    this._localTempData = this.localStorageService.getAll(key)
+    console.log('--recibe --> -----> get allData ----->', key);
+    console.log('--recibe --> -----> get allData  this._localTempData----->', this._localTempData);
+  }
+  saveTemptoLocalNew(key, temp) {
+    this.localStorageService.setData(key, temp);
+  }
+
   async presentToast(enter: boolean) {
     let message = ``;
     let mensaje = enter
-      ? `-> Enter to the parking lot. On location lat|long: ${this.latitude} | ${this.longitude} ->`
-      : `<- Leaving the parking lot. On location lat|long: ${this.latitude} | ${this.longitude} <-`;
+      ? `Enter to the parking lot. On location lat|long: ${this.latitude} | ${this.longitude} !`
+      : `Leaving the parking lot. On location lat|long: ${this.latitude} | ${this.longitude} !`;
     const toast = await this.toastController.create({
       message: `${mensaje}, Have a nice day!  =)`,
-      duration: 2000
+      duration: 2800
     });
     toast.present();
   }
@@ -150,6 +170,12 @@ export class Tab2Page implements OnInit, AfterViewInit {
     this.router.navigateByUrl('/details');
   }
 
+  ionViewDidLeave() {
+    this.saveTemptoLocalNew('tempUserdata', this._localTempData);
+    console.log('saliendo de MAP - salva data temp');
+    this.transientService.setDataIn(this._dataOudTemp);
+    console.log('saliendo de MAP - traNSIENTE->', this._dataOudTemp);
+  }
   /*{ 
 	"idUser": 1,
     "text": "test2",

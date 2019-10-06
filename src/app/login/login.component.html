@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Login App Parking</ion-title>
+    <ion-title> App Parking</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -15,66 +15,51 @@
     <ion-list>
       <ion-item>
         <ion-label position="stacked" color="primary">Email</ion-label>
-        <ion-input
-          [(ngModel)]="login.username"
-          name="username"
-          type="text"
-          #username="ngModel"
-          spellcheck="false"
-          autocapitalize="off"
-          required
-        >
+        <ion-input [(ngModel)]="login.username" name="username" type="email" #username="ngModel" spellcheck="false"
+          autocapitalize="off" pattern="[^ @]*@[^ @]*" required>
         </ion-input>
       </ion-item>
 
       <ion-text color="danger">
-        <p
-          [hidden]="username.valid || submitted == false"
-          class="ion-padding-start"
-        >
+        <p [hidden]="username.valid || submitted == false" class="ion-padding-start">
           Email is required
         </p>
       </ion-text>
-
-      <!-- <ion-item>
-        <ion-label position="stacked" color="primary">Password</ion-label>
-        <ion-input
-          [(ngModel)]="login.password"
-          name="password"
-          type="password"
-          #password="ngModel"
-          required
-        >
-        </ion-input>
-      </ion-item> -->
-
-      <!-- <ion-text color="danger">
-        <p
-          [hidden]="password.valid || submitted == false"
-          class="ion-padding-start"
-        >
-          Password is required
-        </p>
-      </ion-text> -->
     </ion-list>
 
     <ion-row>
       <ion-col>
-        <ion-button
-          (click)="onLogin(loginForm)"
-          type="submit"
-          expand="block"
-          size="large"
-          >Login</ion-button
-        >
+        <ion-button (click)="onLogin(loginForm)" [disabled]="!loginForm.valid" type="submit" expand="block"
+          size="large">Login</ion-button>
       </ion-col>
-      <!-- <ion-col>
-        <ion-button (click)="onSignup()" color="light" expand="block"
-          >Signup</ion-button
-        >
-      </ion-col> -->
     </ion-row>
   </form>
 
+  <!-- <ion-col>
+    <ion-button (click)="onSignup()" color="light" expand="block"
+      >Signup</ion-button
+    >
+  </ion-col> -->
+
+  <!-- <ion-item>
+          <ion-label position="stacked" color="primary">Password</ion-label>
+          <ion-input
+            [(ngModel)]="login.password"
+            name="password"
+            type="password"
+            #password="ngModel"
+            required
+          >
+          </ion-input>
+        </ion-item> -->
+
+  <!-- <ion-text color="danger">
+          <p
+            [hidden]="password.valid || submitted == false"
+            class="ion-padding-start"
+          >
+            Password is required
+          </p>
+        </ion-text> -->
   <!--  -->
 </ion-content>

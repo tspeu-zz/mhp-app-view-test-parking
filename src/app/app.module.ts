@@ -17,6 +17,7 @@ import { AppComponent } from './app.component';
 import { UserService } from './services/user.service';
 // import { DetailsModule } from './pages/details/details.module';
 import { DetailsComponent } from './pages/details/details.component';
+import { TransientService } from './services/transient.service';
 
 // services
 
@@ -38,8 +39,8 @@ import { DetailsComponent } from './pages/details/details.component';
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     HTTP,
-    UserService
+    UserService, TransientService
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
