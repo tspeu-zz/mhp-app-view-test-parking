@@ -50,14 +50,12 @@ export class Tab2Page implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    console.log('ngOnInit');
     // this.getLocaldata('tempUserdata');
     this.getAllLocalData('tempUserdata');
     this._dataOudTemp = this.transientService.getDataOut();
   }
 
   ngAfterViewInit(): void {
-    console.log('ngAfterViewInit');
     this.showloadingMap = true;
     /* */
     this.geolocation
@@ -88,7 +86,6 @@ export class Tab2Page implements OnInit, AfterViewInit {
   //You have parked your ${this._localTempData.car.model} here!
   onParkingAction() {
     this.enterParking = !this.enterParking;
-    console.log('entra al parking ' + !this.enterParking);
     this.actionParkingColor = this.enterParking ? 'danger' : 'success';
 
     this._userParking = {
@@ -113,40 +110,27 @@ export class Tab2Page implements OnInit, AfterViewInit {
       isEnterParking: true
     };
 
-    // TODO:
-    console.log('TODO GRABAR en DB ');
+    //
     this.saveToDb(dataTest);
     this.saveToLocal(dataTest);
-
-    console.log('datos enviados _userParking->', dataTest);
-    console.log(
-      'datos enviados _userParking stringify->',
-      JSON.stringify(dataTest)
-    );
-    console.dir(JSON.stringify(dataTest));
-    console.dir(dataTest);
     this.presentToast(this.enterParking);
   }
 
   saveToDb(data: any) {
     this.userService.postData('https://localhost:3000/api/parking/', data);
-    console.log('data enviada +', data);
   }
 
   saveToLocal(data: any) {
     this.localStorageService.set('userdata', data);
-    console.log('------> saving  localtorage', data);
   }
 
   getLocaldata(key: any) {
     this._localTempData = this.localStorageService.get(key);
-    console.log('data from component ->', this._localTempData);
+
   }
 
   getAllLocalData(key: string) {
     this._localTempData = this.localStorageService.getAll(key)
-    console.log('--recibe --> -----> get allData ----->', key);
-    console.log('--recibe --> -----> get allData  this._localTempData----->', this._localTempData);
   }
   saveTemptoLocalNew(key, temp) {
     this.localStorageService.setData(key, temp);
@@ -165,16 +149,13 @@ export class Tab2Page implements OnInit, AfterViewInit {
   }
 
   // gotoDetailPage() {
-  //   console.log(' got to details-->');
   //   // this.router.navigate(['/details', { data: this._userParking }]);
   //   this.router.navigateByUrl('/details');
   // }
 
   ionViewDidLeave() {
     this.saveTemptoLocalNew('tempUserdata', this._localTempData);
-    console.log('saliendo de MAP - salva data temp');
     this.transientService.setDataIn(this._dataOudTemp);
-    console.log('saliendo de MAP - traNSIENTE->', this._dataOudTemp);
   }
   /*{ 
 	"idUser": 1,

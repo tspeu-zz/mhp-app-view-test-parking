@@ -56,7 +56,6 @@ export class Tab3Page implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-    console.log('enter ngOnInit');
     // this.getData();
     this.presentAlertConfirm();
     this.loadAllUsers();
@@ -69,10 +68,6 @@ export class Tab3Page implements OnInit, AfterViewInit {
       .loadAllData(this.apiURL + '/parking')
       .subscribe((data: {}) => {
         this._UsersData = data;
-        console.log('---> data---> ' + data);
-        console.log('data ads--> ', JSON.stringify(this._UsersData));
-        console.dir(this._UsersData);
-        console.log('_UsersData dsdasad--> ', this._UsersData);
       });
   }
 
@@ -80,10 +75,8 @@ export class Tab3Page implements OnInit, AfterViewInit {
     this.localStorageService
       .get(key)
       .then(val => {
-        console.log('<--------get --------> ' + key + ' ', val);
         this.data[key] = [];
         this.data[key] = val;
-        console.log('<--- desde local get datos---> ' + this.data);
         this._localUserData = this.data;
         if (val === null) {
           this._localUserData = [];
@@ -97,8 +90,6 @@ export class Tab3Page implements OnInit, AfterViewInit {
   loadAllLocalUser(key: string) {
     this.localStorageService.getAll(key).then(val => {
       this._localUserData = val;
-      console.log('-----------> get allData-->' + val);
-      console.log('------------> get allData-->' + this._localUserData);
     });
   }
 
@@ -117,7 +108,6 @@ export class Tab3Page implements OnInit, AfterViewInit {
   // }
 
   ngAfterViewInit(): void {
-    console.log('enter ngAfterViewInit');
     this.loadLocalUser('userdata');
     // this.map = new Map('mapId3').setView([42.35663, -71.1109], 16);
 
@@ -147,11 +137,9 @@ export class Tab3Page implements OnInit, AfterViewInit {
   }
 
   togleeColorParking(isEnter: boolean) {
-    console.log('-->isEnter -> ', isEnter);
     return (this.actionParkingColor = isEnter ? 'danger' : 'success');
   }
   togleeTextParking(isEnter: boolean) {
-    // console.log('-->isEnter -> ', isEnter);
     return isEnter ? 'Entrance at: ' : 'It leaves at: ';
   }
 

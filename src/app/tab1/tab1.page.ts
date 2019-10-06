@@ -42,12 +42,9 @@ export class Tab1Page implements OnInit, AfterViewInit {
     this.formUser();
     // this.loadAllUsers();
     let emailUser = this._activatedRoute.snapshot.paramMap.get('email');
-    console.log('---> login por email- ->' + emailUser);
     if (emailUser === null) {
       this.getAllLocalData('tempUserdata');
-      console.log('----> get from component---> ', this._tempUserData);
       this.datain = this.transientService.getDataOut();
-      console.log('transientService--> data in' + JSON.stringify(this.datain));
       this.loadData(this.datain.user.email);
     } else {
       this.loadData(emailUser);
@@ -58,24 +55,16 @@ export class Tab1Page implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     console.log('ngAfterViewInit');
 
-
   }
 
   // https://localhost:5001/api/User/email
   loadData(email: string) {
-    console.log('--> environment._URL_USER_EMAIL'
-      + environment._URL_USER_EMAIL);
-    console.log('--> EMAIL --> ' + email);
 
     this._userService
       .postData(environment._URL_USER_EMAIL, JSON.stringify(email))
       .subscribe(res => {
-        console.log('---> get user email---> ', res);
-        console.log('---> get user vy email ---> ', JSON.stringify(res));
-        console.dir(res);
         this._tempUserDataOut = res;
         this.transientService.setDataOut(res);
-        console.log('---> transientService OUT->', res);
         this.saveTemptoLocalNew('tempUserdata', JSON.stringify(res));
         // this.saveTemptoLocalNew('tempUserdata  this._tempUserDataOut --> ', this._tempUserDataOut);
 
@@ -89,10 +78,6 @@ export class Tab1Page implements OnInit, AfterViewInit {
       .loadAllData('https://localhost:5001/api/User')
       .subscribe((data: {}) => {
         this._UsersData = data;
-        console.log('---> data---> ' + data);
-        console.log('data ads--> ', JSON.stringify(this._UsersData));
-        console.dir(this._UsersData);
-        console.log('_UsersData dsdasad--> ', this._UsersData);
       });
   }
 
@@ -129,33 +114,24 @@ export class Tab1Page implements OnInit, AfterViewInit {
   }
 
   onSubmit() {
-    console.log(this.userdata.value, this.userdata.valid);
-
-    console.log('< -- enviado este valore --> ', this.userdata.value);
-    console.log('y es valido ', this.userdata.valid);
-    // TODO:
     this.save(JSON.stringify(this.userdata.value));
   }
 
   save(data: any) {
-    console.log('salvabdio la data to db -->' + data);
     return this._userService.postData('https://localhost:5001/api/User', data)
       .subscribe(res => {
-        console.log('DATA SEND ', res);
         // this.saveTemptoLocal(res);
         this.saveTemptoLocalNew('tempUserdata', res);
         this.presentToast('Save to te DB OK >' + JSON.stringify(data));
       },
         err => {
-          console.log('****ERROR AL SEND DATA TO https://localhost:5001/api/User ', data);
-          console.log('****ERROR AL SEND DAATA ---> ', err);
+          console.log('****ERROR ---> ', err);
           this.presentToast('Save to te DB KO ' + err);
         });
   }
 
   onLogout() {
     this._router.navigateByUrl('/login');
-    console.log('logout');
   }
 
   async presentToast(mensaje: string) {
@@ -180,14 +156,11 @@ export class Tab1Page implements OnInit, AfterViewInit {
 
   getAllLocalData(key: string) {
     this._tempUserData = this.localStorageService.getAll(key)
-    console.log('--recibe --> -----> get allData ----->', key);
   }
 
   ionViewDidLeave() {
     this.saveTemptoLocalNew('tempUserdata', this._tempUserDataOut);
-    console.log('saliendo de USER - salva data temp', this._tempUserDataOut);
     this.transientService.setDataOut(this._tempUserDataOut);
-    console.log('---> transientService OUT->', this._tempUserDataOut);
   }
 
   /*
