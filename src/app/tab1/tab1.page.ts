@@ -6,7 +6,7 @@ import {
   Validators,
   FormControl
 } from '@angular/forms';
-import { ToastController } from '@ionic/angular';
+import { ToastController, AlertController } from '@ionic/angular';
 //services
 import { UserService } from '../services/user.service';
 import { LocalStorageService } from '../services/local-storage.service';
@@ -33,6 +33,7 @@ export class Tab1Page implements OnInit, AfterViewInit {
     private _userService: UserService,
     private fb: FormBuilder,
     private toastController: ToastController,
+    private alertController: AlertController,
     private localStorageService: LocalStorageService,
     private transientService: TransientService
   ) { }
@@ -43,6 +44,7 @@ export class Tab1Page implements OnInit, AfterViewInit {
     // this.loadAllUsers();
     let emailUser = this._activatedRoute.snapshot.paramMap.get('email');
     if (emailUser === null) {
+      this.presentAlertConfirm();
       this.getAllLocalData('tempUserdata');
       this.datain = this.transientService.getDataOut();
       this.loadData(this.datain.user.email);
@@ -75,7 +77,8 @@ export class Tab1Page implements OnInit, AfterViewInit {
   loadAllUsers() {
     // return this.getUsers().subscribe((data: {}) => {
     return this._userService
-      .loadAllData('https://localhost:5001/api/User')
+      // .loadAllData('https://localhost:5001/api/User')
+      .loadAllData(environment._URL_ALL_USERS)
       .subscribe((data: {}) => {
         this._UsersData = data;
       });
@@ -118,7 +121,8 @@ export class Tab1Page implements OnInit, AfterViewInit {
   }
 
   save(data: any) {
-    return this._userService.postData('https://localhost:5001/api/User', data)
+    //'https://localhost:5001/api/User'
+    return this._userService.postData(environment.apiUserURL, data)
       .subscribe(res => {
         // this.saveTemptoLocal(res);
         this.saveTemptoLocalNew('tempUserdata', res);
@@ -161,6 +165,30 @@ export class Tab1Page implements OnInit, AfterViewInit {
   ionViewDidLeave() {
     this.saveTemptoLocalNew('tempUserdata', this._tempUserDataOut);
     this.transientService.setDataOut(this._tempUserDataOut);
+  }
+
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      header: 'Information!',
+      message: 'Message <strong>Please confirm your personal data</strong>!!!',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Acept',
+          handler: () => {
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   /*

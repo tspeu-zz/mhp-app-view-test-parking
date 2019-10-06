@@ -39,9 +39,7 @@ export class LoginPage implements OnInit {
     this.submitted = true;
 
     if (form.valid) {
-      console.log('forms es -> ', form);
-      console.log('forms es username-> ', form.value.username);
-      console.dir(form);
+
       this._userService.postData(
         this._userService._URL_USER_EMAIL,
         form.value.username

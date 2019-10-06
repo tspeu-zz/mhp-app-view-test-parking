@@ -149,7 +149,7 @@ export class Tab3Page implements OnInit, AfterViewInit {
 
   async presentAlertConfirm() {
     const alert = await this.alertController.create({
-      header: 'Confirm!',
+      header: 'Information!',
       message: 'Message <strong>Not available in this build</strong>!!!',
       buttons: [
         {
@@ -160,7 +160,7 @@ export class Tab3Page implements OnInit, AfterViewInit {
             console.log('Confirm Cancel:');
           }
         }, {
-          text: 'Okay',
+          text: 'Acept',
           handler: () => {
             console.log('Confirm Okay');
           }

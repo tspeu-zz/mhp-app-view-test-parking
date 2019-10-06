@@ -83,13 +83,13 @@ export class Tab2Page implements OnInit, AfterViewInit {
         console.log('Error getting location', error);
       });
   }
-  //You have parked your ${this._localTempData.car.model} here!
+  // 
   onParkingAction() {
     this.enterParking = !this.enterParking;
     this.actionParkingColor = this.enterParking ? 'danger' : 'success';
 
     this._userParking = {
-      idUser: 1,
+      idUser: this._dataOudTemp.user.id,
       text: 'test from app',
       idParking: 1,
       location: {
@@ -110,14 +110,15 @@ export class Tab2Page implements OnInit, AfterViewInit {
       isEnterParking: true
     };
 
-    //
-    this.saveToDb(dataTest);
-    this.saveToLocal(dataTest);
+    // save data 
+    this.saveToDb(this._userParking);
+    this.saveToLocal(this._userParking);
     this.presentToast(this.enterParking);
   }
 
   saveToDb(data: any) {
-    this.userService.postData('https://localhost:3000/api/parking/', data);
+    //'https://localhost:3000/api/parking/'
+    this.userService.postData(environment.apiParking, data);
   }
 
   saveToLocal(data: any) {
@@ -139,11 +140,11 @@ export class Tab2Page implements OnInit, AfterViewInit {
   async presentToast(enter: boolean) {
     let message = ``;
     let mensaje = enter
-      ? `Enter to the parking lot. On location lat|long: ${this.latitude} | ${this.longitude} !`
-      : `Leaving the parking lot. On location lat|long: ${this.latitude} | ${this.longitude} !`;
+      ? `Hi ${this._dataOudTemp.user.name} you're enter to the parking lot. On location lat|long: ${this.latitude} | ${this.longitude} !`
+      : `Hi ${this._dataOudTemp.user.name} you're leaving the parking lot. On location lat|long: ${this.latitude} | ${this.longitude} !`;
     const toast = await this.toastController.create({
       message: `${mensaje}, Have a nice day!  =)`,
-      duration: 2800
+      duration: 3200
     });
     toast.present();
   }
